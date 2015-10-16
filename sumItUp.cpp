@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 int *shifted_array(int *num, int size, int shift){
     // Left shift algorithm
 //    int shifted_number[size];
@@ -25,6 +26,8 @@ int *shifted_array(int *num, int size, int shift){
 
     //right shift algorithm
     int shifted_number[size];
+
+    if (shift > size) shift = shift % size;
 
     for (int i = 0; i < size; i++){
         int position = i + shift;
