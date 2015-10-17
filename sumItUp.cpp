@@ -7,53 +7,38 @@
 #include <algorithm>
 #include <cmath>
 
-typedef long long ull;
-typedef size_t unsigned_int;
-
 using namespace std;
 
-vector<ull>* cyclicAdder(vector <ull> &add_vector, vector <ull> rotated, unsigned_int shift){
-    std::rotate(rotated.rbegin(), rotated.rbegin() + shift, rotated.rend());
-    for (unsigned_int i = 0; i < add_vector.size() ; i++){
-        add_vector[i] += rotated[i];
+typedef long long ll;
+typedef size_t uInt;
+
+ll temp1 = 0;
+ll temp2 = 0;
+
+vector <ll> *cyclicAdder(vector <ll> &v, uInt shift){
+    uInt size = v.size();
+
+    if (shift >= size) shift = shift % size;
+
+    int start = size - shift;
+
+    for (int i = 0; i < size; i++){
+        if (start >= size) start = start % size;
+        cout << "index: " << start << endl;
+        start++;
     }
-    return &add_vector;
+
+
+    return &v;
 }
 
-int main()
+
+int main(void)
 {
-    vector <ull> v;
-    vector <ull> q;
 
-    unsigned_int N, qN;
-    cin >> N;
-    while (N != 0){
-        ull x;
-        cin >> x;
-        v.push_back(x);
-        N--;
-    }
+    vector <ll> v{1, 2, 3, 4, 5};
+    cyclicAdder(v, 5);
 
-    cin >> qN;
-
-    while (qN != 0){
-        ull x;
-        cin >> x;
-        q.push_back(x);
-        qN--;
-    }
-
-    for (unsigned_int i = 0; i < q.size(); i++){
-        cyclicAdder(v, v, q[i]);
-    }
-
-    unsigned_int total = 0;
-
-    for (unsigned_int i = 0; i < v.size(); i++) total += v[i];
-
-    unsigned_int modulo = std::pow(10, 9) + 7;
-
-    cout << total % modulo << endl;
+    for (int i = 0; i < v.size(); i++) cout << v[i] << endl;
 
 }
-
