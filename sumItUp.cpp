@@ -1,137 +1,59 @@
 /*
- * Problem Statement: https://www.hackerrank.com/contests/ieeextreme-challenges/challenges/sum-it-up
- */
+ * Problem statement: https://www.hackerrank.com/contests/ieeextreme-challenges/challenges/sum-it-up
+ * */
 
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 
-#define END return 0
+typedef long long ull;
+typedef size_t unsigned_int;
+
 using namespace std;
 
-typedef long int lint;
-typedef size_t uint;
+vector<ull>* cyclicAdder(vector <ull> &add_vector, vector <ull> rotated, unsigned_int shift){
+    std::rotate(rotated.rbegin(), rotated.rbegin() + shift, rotated.rend());
+    for (unsigned_int i = 0; i < add_vector.size() ; i++){
+        add_vector[i] += rotated[i];
+    }
+    return &add_vector;
+}
 
+int main()
+{
+    vector <ull> v;
+    vector <ull> q;
 
-//int *shifted_array(int *num, int size, int shift){
-//    // Left shift algorithm
-////    int shifted_number[size];
-////       for (int i = 0; i < size; i++){
-////          int position = i - shift;
-////            if (position >= 0){
-////                shifted_number[position] = num[i];
-////            } else {
-////                int pos = size + position;
-////                shifted_number[pos] = num[i];
-////            }
-////        }
-
-////    return shifted_number;
-
-//    //right shift algorithm
-//    int shifted_number[size];
-
-//    if (shift > size) shift = shift % size;
-
-//    for (int i = 0; i < size; i++){
-//        int position = i + shift;
-//        if (position < size){
-
-//            shifted_number[position] = num[i];
-
-//        } else {
-//            int pos = shift + i - size;
-//            shifted_number[pos] = num[i];
-//        }
-//    }
-//    return shifted_number;
-//}
-
-//int *shifted_sum(int *array, int size, int shift){
-//    int *shifted_numbers = shifted_array(array, size, shift);
-//    for (int i = 0; i < size; i++){
-//        array[i] +=  shifted_numbers[i];
-//    }
-//    return array;
-//}
-
-lint *cyclicAdder(lint *num, size_t size, size_t shift){
-    uint temp;
-    
-    if (shift > size) shift = shift % size;
-
-
-    for (size_t i = 0; i < size; i++){
-//        uint position = size + i - shift;
-
-        uint position = ((i-shift) < 0) ? (size + i - shift) : (i - shift);
-
-        if (position > size - 1) position = position % size;
-
-        if (i == 0){
-            num[i] = num[i] + num[position];
-            temp = position;
-        }
-
-        else {
-            num[i] = num[i] + num[position] -  num[temp];
-            temp = position;
-        }
-
-
+    unsigned_int N, qN;
+    cin >> N;
+    while (N != 0){
+        ull x;
+        cin >> x;
+        v.push_back(x);
+        N--;
     }
 
-    cout << "AFTER ADDING" << endl;
+    cin >> qN;
 
-    for (int i = 0; i < size; i++) cout << num[i] << endl;
+    while (qN != 0){
+        ull x;
+        cin >> x;
+        q.push_back(x);
+        qN--;
+    }
 
-    return num;
+    for (unsigned_int i = 0; i < q.size(); i++){
+        cyclicAdder(v, v, q[i]);
+    }
+
+    unsigned_int total = 0;
+
+    for (unsigned_int i = 0; i < v.size(); i++) total += v[i];
+
+    unsigned_int modulo = std::pow(10, 9) + 7;
+
+    cout << total % modulo << endl;
+
 }
 
-
-int main(void)
-{
-//    int total = 0;
-//    unsigned long long modulo = pow(10, 9) + 7;
-
-//    //Getting the inputs
-//    int N, QN;
-//    cin >> N;
-//    int numbers[N];
-
-//    for (int i = 0; i < N; i++) cin >> numbers[i];
-
-//    cin >> QN;
-//    int Q[QN];
-
-//    for (int i = 0; i < QN; i++) cin >> Q[i];
-
-//    if (QN != 0){
-//        for (int i = 0 ; i <  QN; i++){
-//            shifted_sum(numbers, N, Q[i]);
-//        }
-//    }
-
-//    //Calculating sum
-//    for (int i = 0; i < N ; i++){
-//        total += numbers[i];
-//    }
-
-//    cout << total % modulo << endl;
-
-    unsigned long long modulo = pow(10, 9) + 7;
-
-    lint bal[] = {1, 2, 3, 4, 5};
-
-
-    cyclicAdder(bal, 5, 1 );
-
-
-
-
-
-
-
-    END;
-}
