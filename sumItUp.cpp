@@ -12,33 +12,51 @@ using namespace std;
 typedef long long ll;
 typedef size_t uInt;
 
-ll temp1 = 0;
-ll temp2 = 0;
-
 vector <ll> *cyclicAdder(vector <ll> &v, uInt shift){
+    vector <ll> temp(v);
     uInt size = v.size();
-
     if (shift >= size) shift = shift % size;
-
     int start = size - shift;
-
     for (int i = 0; i < size; i++){
         if (start >= size) start = start % size;
-        cout << "index: " << start << endl;
+        v[i] = v[i] + temp[start];
         start++;
     }
-
-
     return &v;
 }
 
 
 int main(void)
 {
+    vector <ll> n;
+    vector <ll> q;
 
-    vector <ll> v{1, 2, 3, 4, 5};
-    cyclicAdder(v, 5);
+    uInt N, qN;
+    cin >> N;
+    while (N != 0){
+        ll x;
+        cin >> x;
+        n.push_back(x);
+        N--;
+    }
 
-    for (int i = 0; i < v.size(); i++) cout << v[i] << endl;
+    cin >> qN;
+
+    while (qN != 0){
+        ll x;
+        cin >> x;
+        q.push_back(x);
+        qN--;
+    }
+
+    for (uInt i = 0; i < q.size(); i++){
+        cyclicAdder(n, q[i]);
+    }
+
+//    for (uInt i = 0; i < n.size(); i++){
+//        cout << n[i] << endl;
+//    }
+    ll total = std::accumulate(n.begin(), n.end(), 0);
+    cout << total % (ll(pow(10, 9) + 7)) << endl;
 
 }
